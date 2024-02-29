@@ -31,3 +31,14 @@ google-services.json
 
 # Android Profiling
 *.hprof
+
+# ndk
+libs/
+obj/
+
+#clion bullshit
+cmake-build-debug
+CMakeLists.txt
+
+#vsc
+.vscode

@@ -7,7 +7,7 @@ MAINCPPTTMP = """#include "mod/amlmod.h"
 #include "mod/logger.h"
 #include "mod/config.h"
 
-{}
+:cfg:
 
 
 extern "C" void OnModLoad()
@@ -15,7 +15,7 @@ extern "C" void OnModLoad()
     logger->SetTag("Mod Template");
     logger->Info("Mod loaded");
 }
-"""
+"""  # haha
 
 modname = "mymod"
 guid = "com.aml.mod"
@@ -24,6 +24,7 @@ version = "1.0.0"
 
 ndkpath = "D:\\android-ndk"
 def main():
+    global version
     print("---------- AML Project in CLion setup ----------")
     print()
     print("     ----- Basic mod information -----")
@@ -57,7 +58,8 @@ def main():
             cfg_temp = NONCFGTEMP.format(guid, modname, version, author)
             break
 
-    main_cppt = MAINCPPTTMP.format(cfg_temp)
+    main_cppt = MAINCPPTTMP.replace(":cfg:", cfg_temp)
+    
 
     print("     ----- Builder information -----")
     while True: #input for ndk path
@@ -70,11 +72,13 @@ def main():
     print("     ----- Writing files -----")
     with open("main.cpp", "w") as f:
         f.write(main_cppt)
+    with open("ndkpath.txt", 'w') as f:
+        f.write(ndkpath)  
     
     print("""NOTES:
 To be able to build the project, edit your run configuration to run "build.ps1" using powershell, you can delete the premade build configuration
 """)
-
+    input("\npress enter to exit...")
 
 if __name__ == '__main__':
     main()
